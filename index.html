@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olive & Ember | Restaurant Reservations</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="navbar">
+    <a href="#" class="logo">Olive <span>& Ember</span></a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">Our Story</a>
+      <a href="#reservation">Reservations</a>
+    </nav>
+    <div class="nav-actions">
+      <span id="user-status">Guest</span>
+      <button id="auth-open" class="btn btn-outline">Sign in</button>
+      <button id="logout-btn" class="btn hidden">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">A PLACE AT OUR TABLE</p>
+        <h1>Good food.<br>Better company.</h1>
+        <p>Seasonal ingredients, thoughtful cooking, and
+          memorable moments around the table.</p>
+        <a href="#reservation" class="btn">Reserve your table</a>
+      </div>
+    </section>
+
+    <section id="about" class="intro section">
+      <p class="eyebrow">WELCOME TO OLIVE & EMBER</p>
+      <h2>Made with care. Served with love.</h2>
+      <p>Discover comforting classics, fresh seasonal dishes,
+        and a warm atmosphere made for sharing.</p>
+
+      <div class="features">
+        <article>
+          <span class="feature-icon">✦</span>
+          <h3>Fresh ingredients</h3>
+          <p>Seasonal produce and carefully selected ingredients.</p>
+        </article>
+        <article>
+          <span class="feature-icon">♨</span>
+          <h3>Thoughtful cooking</h3>
+          <p>Simple, delicious food prepared with attention to detail.</p>
+        </article>
+        <article>
+          <span class="feature-icon">♡</span>
+          <h3>Warm hospitality</h3>
+          <p>A welcoming table for family, friends, and celebrations.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="reservation" class="booking-section">
+      <div class="booking-info">
+        <p class="eyebrow">YOUR TABLE AWAITS</p>
+        <h2>Make a reservation</h2>
+        <p>Choose a date, select your preferred time,
+          and let us take care of the rest.</p>
+        <div class="hours">
+          <p><strong>Opening hours</strong></p>
+          <p>Monday – Sunday</p>
+          <p>12:00 PM – 10:00 PM</p>
+        </div>
+      </div>
+
+      <form id="reservation-form" class="booking-form">
+        <label for="guest-name">Your name</label>
+        <input id="guest-name" type="text" maxlength="100"
+          placeholder="Full name" required>
+
+        <div class="form-row">
+          <div>
+            <label for="booking-date">Date</label>
+            <input id="booking-date" type="date" required>
+          </div>
+          <div>
+            <label for="booking-time">Time</label>
+            <select id="booking-time" required>
+              <option value="">Choose time</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="21:00">9:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="guest-count">Number of guests</label>
+        <select id="guest-count" required>
+          <option value="1">1 guest</option>
+          <option value="2" selected>2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+          <option value="5">5 guests</option>
+          <option value="6">6 guests</option>
+        </select>
+
+        <label for="special-request">Special requests (optional)</label>
+        <textarea id="special-request" maxlength="500"
+          rows="3" placeholder="Birthday, dietary preferences..."></textarea>
+
+        <button type="submit" class="btn btn-full">
+          Reserve my table
+        </button>
+        <p id="booking-message" class="message" role="status"></p>
+        <div id="my-bookings" class="my-bookings"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <a href="#" class="logo">Olive <span>& Ember</span></a>
+    <p>Good food brings us together.</p>
+    <p>&copy; 2026 Olive & Ember. Demo restaurant website.</p>
+  </footer>
+
+  <!-- Authentication dialog -->
+  <dialog id="auth-dialog">
+    <div class="auth-card">
+      <button type="button" id="auth-close"
+        class="close-btn" aria-label="Close">×</button>
+
+      <p class="eyebrow">WELCOME TO OUR TABLE</p>
+      <h2 id="auth-title">Sign in</h2>
+      <p id="auth-subtitle">Sign in to reserve your table.</p>
+
+      <form id="auth-form">
+        <div id="name-field" class="hidden">
+          <label for="auth-name">Your name</label>
+          <input id="auth-name" type="text" maxlength="100"
+            autocomplete="name" placeholder="Full name">
+        </div>
+
+        <label for="auth-email">Email address</label>
+        <input id="auth-email" type="email"
+          autocomplete="email" placeholder="you@example.com" required>
+
+        <label for="auth-password">Password</label>
+        <input id="auth-password" type="password"
+          autocomplete="current-password" minlength="8"
+          placeholder="At least 8 characters" required>
+
+        <button type="submit" id="auth-submit" class="btn btn-full">
+          Sign in
+        </button>
+      </form>
+
+      <p id="auth-message" class="message" role="status"></p>
+
+      <p class="auth-switch">
+        <span id="switch-text">Don't have an account?</span>
+        <button type="button" id="auth-switch">Create account</button>
+      </p>
+    </div>
+  </dialog>
+</body>
+</html>
